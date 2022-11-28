@@ -34,15 +34,12 @@ fn is_collected(x: &Task, collected_images: &mut Vec<String>) -> bool {
 
 pub fn deser_json(path: &Path) -> Result<Vec<Task>, std::io::Error> {
     let buf = fs::read_to_string(path)?;
-    let deser = serde_json::from_str::<Vec<Task>>(&buf)?;
+    let mut deser = serde_json::from_str::<Vec<Task>>(&buf)?;
     let mut collected_images: Vec<String> = vec![];
     // TODO: turn into for loop for better readability
-    let filtered: Vec<Task> = deser
-        .into_iter()
-        .filter(|x| has_id(x) && has_wh(x) && is_collected(x, &mut collected_images))
-        .collect();
+    deser.retain(|x| has_id(x) && has_wh(x) && is_collected(x, &mut collected_images));
     println!("collected {} unique images.", collected_images.len());
-    Ok(filtered)
+    Ok(deser)
 }
 
 #[cfg(test)]
