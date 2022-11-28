@@ -1,7 +1,6 @@
-pub mod model;
 pub mod deser;
+pub mod model;
 pub mod ser;
-
 
 use crate::{deser::deser_json, ser::ser_json};
 use clap::Parser;

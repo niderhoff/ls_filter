@@ -39,9 +39,7 @@ pub fn deser_json(path: &Path) -> Result<Vec<Task>, std::io::Error> {
     // TODO: turn into for loop for better readability
     let filtered: Vec<Task> = deser
         .into_iter()
-        .filter(|x| {
-            has_id(x) && has_wh(x) && is_collected(x, &mut collected_images)
-        })
+        .filter(|x| has_id(x) && has_wh(x) && is_collected(x, &mut collected_images))
         .collect();
     println!("collected {} unique images.", collected_images.len());
     Ok(filtered)
